@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import domainevent.command.handler.CommnadHandler;
+import domainevent.command.handler.CommandHandler;
 import domainevent.registry.CommandRegistry;
 import msa.commons.consts.JMSQueueNames;
 import msa.commons.event.Event;
@@ -40,7 +40,7 @@ public class CommandConsumerOrchestrator implements MessageListener {
                 Event event = this.gson.fromJson(m.getText(), Event.class);
                 LOGGER.info("Recibido en Cola {}, Evento Id: {}, Mensaje: {}", JMSQueueNames.HOTEL_ORCHESTRATOR_QUEUE,
                         event.getEventId(), event.getValue());
-                CommnadHandler commandHandler = this.commandRegistry.getHandler(event.getEventId());
+                CommandHandler commandHandler = this.commandRegistry.getHandler(event.getEventId());
                 if (commandHandler != null)
                     commandHandler.handle(event.getValue());
             }

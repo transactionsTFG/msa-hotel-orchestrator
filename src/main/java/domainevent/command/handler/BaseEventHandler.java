@@ -4,7 +4,7 @@ import domainevent.publisher.jmseventpublisher.IEventPublisher;
 import msa.commons.event.EventData;
 import msa.commons.event.EventId;
 
-public abstract class BaseEventHandler implements CommnadHandler {
+public abstract class BaseEventHandler implements CommandHandler {
     protected IEventPublisher jmsEventPublisher;
 
     @Override

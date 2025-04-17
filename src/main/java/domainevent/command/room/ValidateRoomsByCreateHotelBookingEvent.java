@@ -5,15 +5,15 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import domainevent.command.handler.BaseEventHandler;
-import domainevent.command.handler.CommnadHandler;
+import domainevent.command.handler.CommandHandler;
 import domainevent.publisher.jmseventpublisher.IEventPublisher;
 import domainevent.publisher.roomqueue.JMSRoomPublisherQualifier;
 import msa.commons.event.EventId;
-import msa.commons.microservices.hotelroom.qualifier.ValidateRoomsByCreateHotelBookingEventQualifier;
+import msa.commons.microservices.hotelroom.qualifier.ValidateHotelRoomsByCreateHotelBookingQualifier;
 
 @Stateless
-@ValidateRoomsByCreateHotelBookingEventQualifier
-@Local(CommnadHandler.class)
+@ValidateHotelRoomsByCreateHotelBookingQualifier
+@Local(CommandHandler.class)
 public class ValidateRoomsByCreateHotelBookingEvent extends BaseEventHandler {
 
     @Override

@@ -5,7 +5,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import domainevent.command.handler.BaseEventHandler;
-import domainevent.command.handler.CommnadHandler;
+import domainevent.command.handler.CommandHandler;
 import domainevent.publisher.bookingqueue.JMSBookingPublisherQualifier;
 import domainevent.publisher.jmseventpublisher.IEventPublisher;
 import msa.commons.event.EventId;
@@ -13,7 +13,7 @@ import msa.commons.microservices.hotelbooking.qualifier.RollbackCreateHotelBooki
 
 @Stateless
 @RollbackCreateHotelBookingEventQualifier
-@Local(CommnadHandler.class)
+@Local(CommandHandler.class)
 public class RollbackCreateHotelBookingEvent extends BaseEventHandler {
 
     @Override
