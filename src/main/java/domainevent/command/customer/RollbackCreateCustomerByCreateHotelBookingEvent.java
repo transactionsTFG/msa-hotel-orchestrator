@@ -2,20 +2,23 @@ package domainevent.command.customer;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 import domainevent.command.handler.BaseEventHandler;
 import domainevent.command.handler.CommnadHandler;
+import domainevent.publisher.customerqueue.JMSCustomerPublisherQualifier;
 import domainevent.publisher.jmseventpublisher.IEventPublisher;
 import msa.commons.event.EventId;
-import msa.commons.microservices.hotelcustomer.qualifier.CreateCustomerByCreateBookingEventRollbackQualifier;
+import msa.commons.microservices.hotelcustomer.qualifier.RollbackCreateCustomerByCreateHotelBookingEventQualifier;
 
 @Stateless
-@CreateCustomerByCreateBookingEventRollbackQualifier
+@RollbackCreateCustomerByCreateHotelBookingEventQualifier
 @Local(CommnadHandler.class)
-public class CreateCustomerByCreateBookingEventRollback extends BaseEventHandler {
+public class RollbackCreateCustomerByCreateHotelBookingEvent extends BaseEventHandler {
 
     @Override
-    public void setJmsEventPublisher(IEventPublisher jmsEventPublisher) {
+    @Inject
+    public void setJmsEventPublisher(@JMSCustomerPublisherQualifier IEventPublisher jmsEventPublisher) {
         this.jmsEventPublisher = jmsEventPublisher;
     }
 

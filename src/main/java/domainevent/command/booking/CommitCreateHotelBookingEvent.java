@@ -2,20 +2,23 @@ package domainevent.command.booking;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 import domainevent.command.handler.BaseEventHandler;
 import domainevent.command.handler.CommnadHandler;
+import domainevent.publisher.bookingqueue.JMSBookingPublisherQualifier;
 import domainevent.publisher.jmseventpublisher.IEventPublisher;
 import msa.commons.event.EventId;
-import msa.commons.microservices.hotelbooking.qualifier.CommitCreateBookingEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.CommitCreateHotelBookingEventQualifier;
 
 @Stateless
-@CommitCreateBookingEventQualifier
+@CommitCreateHotelBookingEventQualifier
 @Local(CommnadHandler.class)
-public class CommitCreateBookingEvent extends BaseEventHandler {
+public class CommitCreateHotelBookingEvent extends BaseEventHandler {
 
     @Override
-    public void setJmsEventPublisher(IEventPublisher jmsEventPublisher) {
+    @Inject
+    public void setJmsEventPublisher(@JMSBookingPublisherQualifier IEventPublisher jmsEventPublisher) {
         this.jmsEventPublisher = jmsEventPublisher;
     }
 

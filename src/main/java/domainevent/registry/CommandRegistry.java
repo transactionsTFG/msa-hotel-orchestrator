@@ -10,12 +10,13 @@ import javax.inject.Inject;
 
 import domainevent.command.handler.CommnadHandler;
 import msa.commons.event.EventId;
-import msa.commons.microservices.hotelbooking.qualifier.CommitCreateBookingEventQualifier;
-import msa.commons.microservices.hotelbooking.qualifier.RollbackCreateBookingEventQualifier;
-import msa.commons.microservices.hotelcustomer.qualifier.CreateCustomerByCreateBookingEventCommitQualifier;
-import msa.commons.microservices.hotelcustomer.qualifier.CreateCustomerByCreateBookingEventRollbackQualifier;
-import msa.commons.microservices.hotelcustomer.qualifier.GetCustomerByCreateBookingEventQualifier;
-import msa.commons.microservices.hotelroom.qualifier.ValidateRoomsQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.CommitCreateHotelBookingEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.RollbackCreateHotelBookingEventQualifier;
+import msa.commons.microservices.hotelcustomer.qualifier.CommitCreateCustomerByCreateHotelBookingEventQualifier;
+import msa.commons.microservices.hotelcustomer.qualifier.RollbackCreateCustomerByCreateHotelBookingEventQualifier;
+import msa.commons.microservices.hotelcustomer.qualifier.ValidateHotelCustomerByCreateHotelBookingEventQualifier;
+import msa.commons.microservices.hotelcustomer.qualifier.GetCustomerByCreateHotelBookingEventQualifier;
+import msa.commons.microservices.hotelroom.qualifier.ValidateRoomsByCreateHotelBookingEventQualifier;
 
 @Singleton
 @Startup
@@ -26,6 +27,7 @@ public class CommandRegistry {
     private CommnadHandler createCustomerByCreateBookingEventCommit;
     private CommnadHandler createCustomerByCreateBookingEventRollback;
     private CommnadHandler getCustomerByCreateBookingEvent;
+    private CommnadHandler validateHotelCustomerByCreateHotelBookingEvent;
     private CommnadHandler validateRoomsEvent;
 
     @PostConstruct
@@ -36,7 +38,8 @@ public class CommandRegistry {
         this.handlers.put(EventId.ROLLBACK_CREATE_CUSTOMER_BY_HOTEL_BOOKING,
                 createCustomerByCreateBookingEventRollback);
         this.handlers.put(EventId.GET_HOTEL_CUSTOMER, getCustomerByCreateBookingEvent);
-        this.handlers.put(EventId.VALIDATE_HOTEL_ROOMS, validateRoomsEvent);
+        this.handlers.put(EventId.VALIDATE_HOTEL_CUSTOMER_BY_CREATE_HOTEL_BOOKING, validateHotelCustomerByCreateHotelBookingEvent);
+        this.handlers.put(EventId.VALIDATE_HOTEL_ROOMS_BY_CREATE_HOTEL_BOOKING, validateRoomsEvent);
     }
 
     public CommnadHandler getHandler(EventId eventId) {
@@ -45,36 +48,43 @@ public class CommandRegistry {
 
     @Inject
     public void setCommitCreateBookingEvent(
-            @CommitCreateBookingEventQualifier CommnadHandler commitCreateBookingEvent) {
+            @CommitCreateHotelBookingEventQualifier CommnadHandler commitCreateBookingEvent) {
         this.commitCreateBookingEvent = commitCreateBookingEvent;
     }
 
     @Inject
     public void setRollbackCreateBookingEvent(
-            @RollbackCreateBookingEventQualifier CommnadHandler rollbackCreateBookingEvent) {
+            @RollbackCreateHotelBookingEventQualifier CommnadHandler rollbackCreateBookingEvent) {
         this.rollbackCreateBookingEvent = rollbackCreateBookingEvent;
     }
 
     @Inject
     public void setCreateCustomerByCreateBookingEventCommit(
-            @CreateCustomerByCreateBookingEventCommitQualifier CommnadHandler createCustomerByCreateBookingEventCommit) {
+            @CommitCreateCustomerByCreateHotelBookingEventQualifier CommnadHandler createCustomerByCreateBookingEventCommit) {
         this.createCustomerByCreateBookingEventCommit = createCustomerByCreateBookingEventCommit;
     }
 
     @Inject
     public void setCreateCustomerByCreateBookingEventRollback(
-            @CreateCustomerByCreateBookingEventRollbackQualifier CommnadHandler createCustomerByCreateBookingEventRollback) {
+            @RollbackCreateCustomerByCreateHotelBookingEventQualifier CommnadHandler createCustomerByCreateBookingEventRollback) {
         this.createCustomerByCreateBookingEventRollback = createCustomerByCreateBookingEventRollback;
     }
 
     @Inject
     public void setGetCustomerByCreateBookingEvent(
-            @GetCustomerByCreateBookingEventQualifier CommnadHandler getCustomerByCreateBookingEvent) {
+            @GetCustomerByCreateHotelBookingEventQualifier CommnadHandler getCustomerByCreateBookingEvent) {
         this.getCustomerByCreateBookingEvent = getCustomerByCreateBookingEvent;
     }
 
     @Inject
-    public void setvalidateRoomsEvent(@ValidateRoomsQualifier CommnadHandler validateRoomsEvent) {
+    public void setValidateHotelCustomerByCreateHotelBookingEvent(
+        @ValidateHotelCustomerByCreateHotelBookingEventQualifier CommnadHandler validateHotelCustomerByCreateHotelBookingEvent
+    ) {
+        this.validateHotelCustomerByCreateHotelBookingEvent = validateHotelCustomerByCreateHotelBookingEvent;
+    }
+
+    @Inject
+    public void setValidateRoomsEvent(@ValidateRoomsByCreateHotelBookingEventQualifier CommnadHandler validateRoomsEvent) {
         this.validateRoomsEvent = validateRoomsEvent;
     }
 

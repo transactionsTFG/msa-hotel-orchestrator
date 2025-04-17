@@ -20,7 +20,7 @@ import msa.commons.event.Event;
 @MessageDriven(mappedName = JMSQueueNames.HOTEL_ORCHESTRATOR_QUEUE)
 public class CommandConsumerOrchestrator implements MessageListener {
     private Gson gson;
-    private CommandRegistry eventHandlerRegistry;
+    private CommandRegistry commandRegistry;
     private static final Logger LOGGER = LogManager.getLogger(CommandConsumerOrchestrator.class);
 
     @Inject
@@ -29,8 +29,8 @@ public class CommandConsumerOrchestrator implements MessageListener {
     }
 
     @EJB
-    public void setCommandHandlerRegistry(CommandRegistry commandHandlerRegistry) {
-        this.eventHandlerRegistry = commandHandlerRegistry;
+    public void setCommandRegistry(CommandRegistry commandRegistry) {
+        this.commandRegistry = commandRegistry;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class CommandConsumerOrchestrator implements MessageListener {
                 Event event = this.gson.fromJson(m.getText(), Event.class);
                 LOGGER.info("Recibido en Cola {}, Evento Id: {}, Mensaje: {}", JMSQueueNames.HOTEL_ORCHESTRATOR_QUEUE,
                         event.getEventId(), event.getValue());
-                CommnadHandler commandHandler = this.eventHandlerRegistry.getHandler(event.getEventId());
+                CommnadHandler commandHandler = this.commandRegistry.getHandler(event.getEventId());
                 if (commandHandler != null)
                     commandHandler.handle(event.getValue());
             }

@@ -13,5 +13,6 @@ public abstract class BaseEventHandler implements CommnadHandler {
     }
 
     public abstract void setJmsEventPublisher(IEventPublisher jmsEventPublisher);
-    public abstract EventId sendEventId(); 
+
+    public abstract EventId sendEventId();
 }
