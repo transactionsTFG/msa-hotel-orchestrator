@@ -9,12 +9,12 @@ import domainevent.command.handler.CommandHandler;
 import domainevent.publisher.bookingqueue.JMSBookingPublisherQualifier;
 import domainevent.publisher.jmseventpublisher.IEventPublisher;
 import msa.commons.event.EventId;
-import msa.commons.microservices.hotelbooking.qualifier.CancelDeleteHotelBookingLineEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.CommitDeleteHotelBookingEventQualifier;
 
 @Stateless
-@CancelDeleteHotelBookingLineEventQualifier
+@CommitDeleteHotelBookingEventQualifier
 @Local(CommandHandler.class)
-public class CancelDeleteHotelBookingLineEvent extends BaseEventHandler {
+public class CommitDeleteHotelBookingEvent extends BaseEventHandler {
 
     @Override
     @Inject
@@ -24,7 +24,7 @@ public class CancelDeleteHotelBookingLineEvent extends BaseEventHandler {
 
     @Override
     public EventId sendEventId() {
-        return EventId.CANCEL_DELETE_HOTEL_BOOKINGLINE;
+        return EventId.COMMIT_DELETE_HOTEL_BOOKING;
     }
 
 }

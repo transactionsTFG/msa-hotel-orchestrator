@@ -10,16 +10,16 @@ import javax.inject.Inject;
 
 import domainevent.command.handler.CommandHandler;
 import msa.commons.event.EventId;
-import msa.commons.microservices.hotelbooking.qualifier.CancelDeleteHotelBookingEventQualifier;
-import msa.commons.microservices.hotelbooking.qualifier.CancelDeleteHotelBookingLineEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.RollbackDeleteHotelBookingEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.RollbackDeleteHotelBookingLineEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.CancelGetHotelBookingEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.CheckRoomsAvailabilityByCreateHotelBookingEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.CommitCreateHotelBookingEventQualifier;
-import msa.commons.microservices.hotelbooking.qualifier.ConfirmDeleteHotelBookingEventQualifier;
-import msa.commons.microservices.hotelbooking.qualifier.ConfirmDeleteHotelBookingLineEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.CommitDeleteHotelBookingEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.CommitDeleteHotelBookingLineEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.ConfirmGetHotelBookingEventQualifier;
-import msa.commons.microservices.hotelbooking.qualifier.DeleteHotelBookingEventQualifier;
-import msa.commons.microservices.hotelbooking.qualifier.DeleteHotelBookingLineEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.BeginDeleteHotelBookingEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.BeginDeleteHotelBookingLineEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.GetHotelBookingEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.RollbackCreateHotelBookingEventQualifier;
 import msa.commons.microservices.hotelcustomer.qualifier.CommitCreateCustomerByCreateHotelBookingEventQualifier;
@@ -43,12 +43,12 @@ public class CommandRegistry {
     private CommandHandler getHotelBookingEvent;
     private CommandHandler confirmGetHotelBookingEvent;
     private CommandHandler cancelGetHotelBookingEvent;
-    private CommandHandler deleteHotelBookingEvent;
-    private CommandHandler confirmDeleteHotelBookingEvent;
-    private CommandHandler cancelDeleteHotelBookingEvent;
-    private CommandHandler deleteHotelBookingLineEvent;
-    private CommandHandler confirmDeleteHotelBookingLineEvent;
-    private CommandHandler cancelDeleteHotelBookingLineEvent;
+    private CommandHandler beginDeleteHotelBookingEvent;
+    private CommandHandler commitDeleteHotelBookingEvent;
+    private CommandHandler rollbackDeleteHotelBookingEvent;
+    private CommandHandler beginDeleteHotelBookingLineEvent;
+    private CommandHandler commitDeleteHotelBookingLineEvent;
+    private CommandHandler rollbackDeleteHotelBookingLineEvent;
 
     @PostConstruct
     public void init() {
@@ -74,12 +74,12 @@ public class CommandRegistry {
         this.handlers.put(EventId.GET_HOTEL_BOOKING, getHotelBookingEvent);
         this.handlers.put(EventId.CONFIRM_GET_HOTEL_BOOKING, confirmGetHotelBookingEvent);
         this.handlers.put(EventId.CANCEL_GET_HOTEL_BOOKING, cancelGetHotelBookingEvent);
-        this.handlers.put(EventId.DELETE_HOTEL_BOOKING, deleteHotelBookingEvent);
-        this.handlers.put(EventId.CONFIRM_DELETE_HOTEL_BOOKING, confirmDeleteHotelBookingEvent);
-        this.handlers.put(EventId.CANCEL_DELETE_HOTEL_BOOKING, cancelDeleteHotelBookingEvent);
-        this.handlers.put(EventId.DELETE_HOTEL_BOOKINGLINE, deleteHotelBookingLineEvent);
-        this.handlers.put(EventId.CONFIRM_DELETE_HOTEL_BOOKINGLINE, confirmDeleteHotelBookingLineEvent);
-        this.handlers.put(EventId.CANCEL_DELETE_HOTEL_BOOKINGLINE, cancelDeleteHotelBookingLineEvent);
+        this.handlers.put(EventId.BEGIN_DELETE_HOTEL_BOOKING, beginDeleteHotelBookingEvent);
+        this.handlers.put(EventId.COMMIT_DELETE_HOTEL_BOOKING, commitDeleteHotelBookingEvent);
+        this.handlers.put(EventId.ROLLBACK_DELETE_HOTEL_BOOKING, rollbackDeleteHotelBookingEvent);
+        this.handlers.put(EventId.BEGIN_DELETE_HOTEL_BOOKINGLINE, beginDeleteHotelBookingLineEvent);
+        this.handlers.put(EventId.COMMIT_DELETE_HOTEL_BOOKINGLINE, commitDeleteHotelBookingLineEvent);
+        this.handlers.put(EventId.ROLLBACK_DELETE_HOTEL_BOOKINGLINE, rollbackDeleteHotelBookingLineEvent);
     }
 
     public CommandHandler getHandler(EventId eventId) {
@@ -153,39 +153,39 @@ public class CommandRegistry {
     }
 
     @Inject
-    public void setDeleteHotelBookingEvent(
-            @DeleteHotelBookingEventQualifier CommandHandler deleteHotelBookingEvent) {
-        this.deleteHotelBookingEvent = deleteHotelBookingEvent;
+    public void setBeginDeleteHotelBookingEvent(
+            @BeginDeleteHotelBookingEventQualifier CommandHandler deleteHotelBookingEvent) {
+        this.beginDeleteHotelBookingEvent = deleteHotelBookingEvent;
     }
 
     @Inject
-    public void setConfirmDeleteHotelBookingEvent(
-            @ConfirmDeleteHotelBookingEventQualifier CommandHandler confirmDeleteHotelBookingEvent) {
-        this.confirmDeleteHotelBookingEvent = confirmDeleteHotelBookingEvent;
+    public void setCommitDeleteHotelBookingEvent(
+            @CommitDeleteHotelBookingEventQualifier CommandHandler confirmDeleteHotelBookingEvent) {
+        this.commitDeleteHotelBookingEvent = confirmDeleteHotelBookingEvent;
     }
 
     @Inject
-    public void setCancelDeleteHotelBookingEvent(
-            @CancelDeleteHotelBookingEventQualifier CommandHandler cancelDeleteHotelBookingEvent) {
-        this.cancelDeleteHotelBookingEvent = cancelDeleteHotelBookingEvent;
+    public void setRollbackDeleteHotelBookingEvent(
+            @RollbackDeleteHotelBookingEventQualifier CommandHandler cancelDeleteHotelBookingEvent) {
+        this.rollbackDeleteHotelBookingEvent = cancelDeleteHotelBookingEvent;
     }
 
     @Inject
-    public void setDeleteHotelBookingLineEvent(
-            @DeleteHotelBookingLineEventQualifier CommandHandler deleteHotelBookingLineEvent) {
-        this.deleteHotelBookingLineEvent = deleteHotelBookingLineEvent;
+    public void setBeginDeleteHotelBookingLineEvent(
+            @BeginDeleteHotelBookingLineEventQualifier CommandHandler deleteHotelBookingLineEvent) {
+        this.beginDeleteHotelBookingLineEvent = deleteHotelBookingLineEvent;
     }
 
     @Inject
-    public void setConfirmDeleteHotelBookingLineEvent(
-            @ConfirmDeleteHotelBookingLineEventQualifier CommandHandler confirmDeleteHotelBookingLineEvent) {
-        this.confirmDeleteHotelBookingLineEvent = confirmDeleteHotelBookingLineEvent;
+    public void setCommitDeleteHotelBookingLineEvent(
+            @CommitDeleteHotelBookingLineEventQualifier CommandHandler confirmDeleteHotelBookingLineEvent) {
+        this.commitDeleteHotelBookingLineEvent = confirmDeleteHotelBookingLineEvent;
     }
 
     @Inject
-    public void setCancelDeleteHotelBookingLineEvent(
-            @CancelDeleteHotelBookingLineEventQualifier CommandHandler cancelDeleteHotelBookingLineEvent) {
-        this.cancelDeleteHotelBookingLineEvent = cancelDeleteHotelBookingLineEvent;
+    public void setRollbackDeleteHotelBookingLineEvent(
+            @RollbackDeleteHotelBookingLineEventQualifier CommandHandler cancelDeleteHotelBookingLineEvent) {
+        this.rollbackDeleteHotelBookingLineEvent = cancelDeleteHotelBookingLineEvent;
     }
 
 }
