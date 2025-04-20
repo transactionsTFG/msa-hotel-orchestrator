@@ -1,4 +1,4 @@
-package domainevent.command.booking;
+package domainevent.command.booking.get;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -9,12 +9,12 @@ import domainevent.command.handler.CommandHandler;
 import domainevent.publisher.bookingqueue.JMSBookingPublisherQualifier;
 import domainevent.publisher.jmseventpublisher.IEventPublisher;
 import msa.commons.event.EventId;
-import msa.commons.microservices.hotelbooking.qualifier.RollbackCreateHotelBookingEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.ConfirmGetHotelBookingEventQualifier;
 
 @Stateless
-@RollbackCreateHotelBookingEventQualifier
+@ConfirmGetHotelBookingEventQualifier
 @Local(CommandHandler.class)
-public class RollbackCreateHotelBookingEvent extends BaseEventHandler {
+public class ConfirmGetHotelBookingEvent extends BaseEventHandler {
 
     @Override
     @Inject
@@ -24,7 +24,7 @@ public class RollbackCreateHotelBookingEvent extends BaseEventHandler {
 
     @Override
     public EventId sendEventId() {
-        return EventId.ROLLBACK_CREATE_HOTEL_BOOKING;
+        return EventId.CONFIRM_GET_HOTEL_BOOKING;
     }
-    
+
 }

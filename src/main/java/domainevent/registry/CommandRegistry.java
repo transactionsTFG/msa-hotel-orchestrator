@@ -12,11 +12,14 @@ import domainevent.command.handler.CommandHandler;
 import msa.commons.event.EventId;
 import msa.commons.microservices.hotelbooking.qualifier.RollbackDeleteHotelBookingEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.RollbackDeleteHotelBookingLineEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.RollbackUpdateHotelBookingEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.CancelGetHotelBookingEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.CheckRoomsAvailabilityByCreateHotelBookingEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.CheckRoomsAvailabilityByUpdateHotelBookingEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.CommitCreateHotelBookingEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.CommitDeleteHotelBookingEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.CommitDeleteHotelBookingLineEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.CommitUpdateHotelBookingEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.ConfirmGetHotelBookingEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.BeginDeleteHotelBookingEventQualifier;
 import msa.commons.microservices.hotelbooking.qualifier.BeginDeleteHotelBookingLineEventQualifier;
@@ -26,7 +29,9 @@ import msa.commons.microservices.hotelcustomer.qualifier.CommitCreateCustomerByC
 import msa.commons.microservices.hotelcustomer.qualifier.GetCustomerByCreateHotelBookingEventQualifier;
 import msa.commons.microservices.hotelcustomer.qualifier.RollbackCreateCustomerByCreateHotelBookingEventQualifier;
 import msa.commons.microservices.hotelcustomer.qualifier.ValidateHotelCustomerByCreateHotelBookingEventQualifier;
+import msa.commons.microservices.hotelcustomer.qualifier.ValidateHotelCustomerByUpdateHotelBookingEventQualifier;
 import msa.commons.microservices.hotelroom.qualifier.ValidateHotelRoomsByCreateHotelBookingQualifier;
+import msa.commons.microservices.hotelroom.qualifier.ValidateHotelRoomsByUpdateHotelBookingEventQualifier;
 
 @Singleton
 @Startup
@@ -49,6 +54,11 @@ public class CommandRegistry {
     private CommandHandler beginDeleteHotelBookingLineEvent;
     private CommandHandler commitDeleteHotelBookingLineEvent;
     private CommandHandler rollbackDeleteHotelBookingLineEvent;
+    private CommandHandler commitUpdateHotelBookingEvent;
+    private CommandHandler rollbackUpdateHotelBookingEvent;
+    private CommandHandler validateHotelCustomerByUpdateHotelBookingEvent;
+    private CommandHandler validateHotelRoomsByUpdateHotelBookingEvent;
+    private CommandHandler checkRoomsAvailabilityByUpdateHotelBookingEvent;
 
     @PostConstruct
     public void init() {
@@ -80,6 +90,24 @@ public class CommandRegistry {
         this.handlers.put(EventId.BEGIN_DELETE_HOTEL_BOOKINGLINE, beginDeleteHotelBookingLineEvent);
         this.handlers.put(EventId.COMMIT_DELETE_HOTEL_BOOKINGLINE, commitDeleteHotelBookingLineEvent);
         this.handlers.put(EventId.ROLLBACK_DELETE_HOTEL_BOOKINGLINE, rollbackDeleteHotelBookingLineEvent);
+        this.handlers.put(EventId.COMMIT_UPDATE_HOTEL_BOOKING, commitUpdateHotelBookingEvent);
+        this.handlers.put(EventId.ROLLBACK_UPDATE_HOTEL_BOOKING, rollbackUpdateHotelBookingEvent);
+
+        this.handlers.put(EventId.VALIDATE_HOTEL_CUSTOMER_BY_UPDATE_HOTEL_BOOKING,
+                validateHotelCustomerByUpdateHotelBookingEvent);
+        this.handlers.put(EventId.CONFIRM_VALIDATE_HOTEL_CUSTOMER_BY_UPDATE_HOTEL_BOOKING,
+                validateHotelRoomsByUpdateHotelBookingEvent);
+        this.handlers.put(EventId.CANCEL_VALIDATE_HOTEL_CUSTOMER_BY_UPDATE_HOTEL_BOOKING,
+                rollbackUpdateHotelBookingEvent);
+        this.handlers.put(EventId.VALIDATE_HOTEL_ROOMS_BY_UPDATE_HOTEL_BOOKING,
+                validateHotelRoomsByUpdateHotelBookingEvent);
+        this.handlers.put(EventId.CONFIRM_VALIDATE_HOTEL_ROOMS_BY_UPDATE_HOTEL_BOOKING,
+                checkRoomsAvailabilityByUpdateHotelBookingEvent);
+        this.handlers.put(EventId.CANCEL_VALIDATE_HOTEL_ROOMS_BY_UPDATE_HOTEL_BOOKING, rollbackUpdateHotelBookingEvent);
+        this.handlers.put(EventId.CONFIRM_CHECK_ROOMS_AVAILABILITY_BY_UPDATE_HOTEL_BOOKING,
+                commitUpdateHotelBookingEvent);
+        this.handlers.put(EventId.CANCEL_CHECK_ROOMS_AVAILABILITY_BY_UPDATE_HOTEL_BOOKING,
+                rollbackUpdateHotelBookingEvent);
     }
 
     public CommandHandler getHandler(EventId eventId) {
@@ -186,6 +214,36 @@ public class CommandRegistry {
     public void setRollbackDeleteHotelBookingLineEvent(
             @RollbackDeleteHotelBookingLineEventQualifier CommandHandler cancelDeleteHotelBookingLineEvent) {
         this.rollbackDeleteHotelBookingLineEvent = cancelDeleteHotelBookingLineEvent;
+    }
+
+    @Inject
+    public void setCommitUpdateHotelBookingEvent(
+            @CommitUpdateHotelBookingEventQualifier CommandHandler commitUpdateHotelBookingEvent) {
+        this.commitUpdateHotelBookingEvent = commitUpdateHotelBookingEvent;
+    }
+
+    @Inject
+    public void setRollbackUpdateHotelBookingEvent(
+            @RollbackUpdateHotelBookingEventQualifier CommandHandler rollbackUpdateHotelBookingEvent) {
+        this.rollbackUpdateHotelBookingEvent = rollbackUpdateHotelBookingEvent;
+    }
+
+    @Inject
+    public void setValidateHotelCustomerByUpdateHotelBookingEvent(
+            @ValidateHotelCustomerByUpdateHotelBookingEventQualifier CommandHandler validateHotelCustomerByUpdateHotelBookingEvent) {
+        this.validateHotelCustomerByUpdateHotelBookingEvent = validateHotelCustomerByUpdateHotelBookingEvent;
+    }
+
+    @Inject
+    public void setValidateHotelRoomsByUpdateHotelBookingEvent(
+            @ValidateHotelRoomsByUpdateHotelBookingEventQualifier CommandHandler validateHotelRoomsByUpdateHotelBookingEvent) {
+        this.validateHotelRoomsByUpdateHotelBookingEvent = validateHotelRoomsByUpdateHotelBookingEvent;
+    }
+
+    @Inject
+    public void setCheckRoomsAvailabilityByUpdateHotelBookingEvent(
+            @CheckRoomsAvailabilityByUpdateHotelBookingEventQualifier CommandHandler checkRoomsAvailabilityByUpdateHotelBookingEvent) {
+        this.checkRoomsAvailabilityByUpdateHotelBookingEvent = checkRoomsAvailabilityByUpdateHotelBookingEvent;
     }
 
 }

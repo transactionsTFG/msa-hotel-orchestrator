@@ -1,4 +1,4 @@
-package domainevent.command.booking;
+package domainevent.command.booking.update;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -9,12 +9,12 @@ import domainevent.command.handler.CommandHandler;
 import domainevent.publisher.bookingqueue.JMSBookingPublisherQualifier;
 import domainevent.publisher.jmseventpublisher.IEventPublisher;
 import msa.commons.event.EventId;
-import msa.commons.microservices.hotelbooking.qualifier.CheckRoomsAvailabilityByCreateHotelBookingEventQualifier;
+import msa.commons.microservices.hotelbooking.qualifier.BeginUpdateHotelBookingEventQualifier;
 
 @Stateless
-@CheckRoomsAvailabilityByCreateHotelBookingEventQualifier
+@BeginUpdateHotelBookingEventQualifier
 @Local(CommandHandler.class)
-public class CheckRoomsAvailabilityByCreateHotelBookingEvent extends BaseEventHandler {
+public class BeginUpdateHotelBookingEvent extends BaseEventHandler {
 
     @Override
     @Inject
@@ -24,7 +24,7 @@ public class CheckRoomsAvailabilityByCreateHotelBookingEvent extends BaseEventHa
 
     @Override
     public EventId sendEventId() {
-        return EventId.CHECK_ROOMS_AVAILABILITY_BY_CREATE_HOTEL_BOOKING;
+        return EventId.BEGIN_UPDATE_HOTEL_BOOKING;
     }
     
 }
