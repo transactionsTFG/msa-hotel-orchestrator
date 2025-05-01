@@ -32,28 +32,6 @@ import business.qualifier.hotelroom.ValidateHotelRoomsByCreateHotelBookingQualif
 import business.qualifier.hotelroom.ValidateHotelRoomsByUpdateHotelBookingEventQualifier;
 import domainevent.command.handler.CommandHandler;
 import msa.commons.event.EventId;
-// import msa.commons.microservices.hotelbooking.qualifier.RollbackDeleteHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.RollbackDeleteHotelBookingLineEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.RollbackUpdateHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.CancelGetHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.CheckRoomsAvailabilityByCreateHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.CheckRoomsAvailabilityByUpdateHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.CommitCreateHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.CommitDeleteHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.CommitDeleteHotelBookingLineEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.CommitUpdateHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.ConfirmGetHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.BeginDeleteHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.BeginDeleteHotelBookingLineEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.GetHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelbooking.qualifier.RollbackCreateHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelcustomer.qualifier.CommitCreateCustomerByCreateHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelcustomer.qualifier.GetCustomerByCreateHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelcustomer.qualifier.RollbackCreateCustomerByCreateHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelcustomer.qualifier.ValidateHotelCustomerByCreateHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelcustomer.qualifier.ValidateHotelCustomerByUpdateHotelBookingEventQualifier;
-// import msa.commons.microservices.hotelroom.qualifier.ValidateHotelRoomsByCreateHotelBookingQualifier;
-// import msa.commons.microservices.hotelroom.qualifier.ValidateHotelRoomsByUpdateHotelBookingEventQualifier;
 
 @Singleton
 @Startup
