@@ -4,12 +4,12 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import business.qualifier.hotelcustomer.GetCustomerByCreateHotelBookingEventQualifier;
 import domainevent.command.handler.BaseEventHandler;
 import domainevent.command.handler.CommandHandler;
 import domainevent.publisher.customerqueue.JMSCustomerPublisherQualifier;
 import domainevent.publisher.jmseventpublisher.IEventPublisher;
 import msa.commons.event.EventId;
-import msa.commons.microservices.hotelcustomer.qualifier.GetCustomerByCreateHotelBookingEventQualifier;
 
 @Stateless
 @GetCustomerByCreateHotelBookingEventQualifier

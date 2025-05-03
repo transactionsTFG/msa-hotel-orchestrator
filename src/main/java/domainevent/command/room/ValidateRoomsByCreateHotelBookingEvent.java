@@ -4,12 +4,12 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import business.qualifier.hotelroom.ValidateHotelRoomsByCreateHotelBookingQualifier;
 import domainevent.command.handler.BaseEventHandler;
 import domainevent.command.handler.CommandHandler;
 import domainevent.publisher.jmseventpublisher.IEventPublisher;
 import domainevent.publisher.roomqueue.JMSRoomPublisherQualifier;
 import msa.commons.event.EventId;
-import msa.commons.microservices.hotelroom.qualifier.ValidateHotelRoomsByCreateHotelBookingQualifier;
 
 @Stateless
 @ValidateHotelRoomsByCreateHotelBookingQualifier
