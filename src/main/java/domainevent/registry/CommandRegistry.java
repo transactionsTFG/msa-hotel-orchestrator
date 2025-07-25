@@ -8,6 +8,9 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 
+import com.oracle.state.ext.listener.StateCallback.Event;
+
+import business.qualifier.hotelbooking.BeginCreateHotelBookingEventQualifier;
 import business.qualifier.hotelbooking.BeginDeleteHotelBookingEventQualifier;
 import business.qualifier.hotelbooking.BeginDeleteHotelBookingLineEventQualifier;
 import business.qualifier.hotelbooking.CancelGetHotelBookingEventQualifier;
@@ -59,9 +62,12 @@ public class CommandRegistry {
     private CommandHandler validateHotelCustomerByUpdateHotelBookingEvent;
     private CommandHandler validateHotelRoomsByUpdateHotelBookingEvent;
     private CommandHandler checkRoomsAvailabilityByUpdateHotelBookingEvent;
+    private CommandHandler beginCreateReservationHotel;
 
     @PostConstruct
     public void init() {
+        this.handlers.put(EventId.CREATE_RESERVATION_TRAVEL, beginCreateReservationHotel);
+        
         this.handlers.put(EventId.COMMIT_CREATE_HOTEL_BOOKING, commitCreateBookingEvent);
         this.handlers.put(EventId.ROLLBACK_CREATE_HOTEL_BOOKING, rollbackCreateBookingEvent);
         this.handlers.put(EventId.COMMIT_CREATE_CUSTOMER_BY_HOTEL_BOOKING, createCustomerByCreateBookingEventCommit);
@@ -244,6 +250,12 @@ public class CommandRegistry {
     public void setCheckRoomsAvailabilityByUpdateHotelBookingEvent(
             @CheckRoomsAvailabilityByUpdateHotelBookingEventQualifier CommandHandler checkRoomsAvailabilityByUpdateHotelBookingEvent) {
         this.checkRoomsAvailabilityByUpdateHotelBookingEvent = checkRoomsAvailabilityByUpdateHotelBookingEvent;
+    }
+
+    @Inject
+    public void setBeginCreateReservationHotel(
+            @BeginCreateHotelBookingEventQualifier CommandHandler beginCreateReservationHotel) {
+        this.beginCreateReservationHotel = beginCreateReservationHotel;
     }
 
 }
