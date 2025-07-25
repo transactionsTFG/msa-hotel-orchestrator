@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 
-import integration.producer.qualifiers.ConnectionFactoryAgency;
+import business.qualifier.cf.ConnectionFactoryAgencyQualifier;
 import msa.commons.consts.PropertiesConsumer;
 import msa.commons.event.Event;
 import msa.commons.event.EventData;
@@ -37,7 +37,7 @@ public abstract class BaseJMSRemoteAgencyEventPublisher implements IEventPublish
     }
 
     @Inject
-    public void setConnectionFactory(@ConnectionFactoryAgency ConnectionFactory connectionFactory) {
+    public void setConnectionFactory(@ConnectionFactoryAgencyQualifier ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
     }
 
