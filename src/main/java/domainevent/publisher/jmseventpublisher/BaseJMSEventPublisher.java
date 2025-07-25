@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 
+import business.qualifier.cf.ConnectionFactoryLocalQualifier;
 import msa.commons.consts.PropertiesConsumer;
 import msa.commons.event.Event;
 import msa.commons.event.EventData;
@@ -36,7 +37,7 @@ public abstract class BaseJMSEventPublisher implements IEventPublisher {
     }
 
     @Inject
-    public void setConnectionFactory(ConnectionFactory connectionFactory) {
+    public void setConnectionFactory(@ConnectionFactoryLocalQualifier ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
     }
 
