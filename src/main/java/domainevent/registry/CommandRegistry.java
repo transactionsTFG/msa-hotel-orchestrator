@@ -67,7 +67,6 @@ public class CommandRegistry {
     @PostConstruct
     public void init() {
         this.handlers.put(EventId.CREATE_RESERVATION_TRAVEL, beginCreateReservationHotel);
-        
         this.handlers.put(EventId.COMMIT_CREATE_HOTEL_BOOKING, commitCreateBookingEvent);
         this.handlers.put(EventId.ROLLBACK_CREATE_HOTEL_BOOKING, rollbackCreateBookingEvent);
         this.handlers.put(EventId.COMMIT_CREATE_CUSTOMER_BY_HOTEL_BOOKING, createCustomerByCreateBookingEventCommit);
@@ -90,7 +89,8 @@ public class CommandRegistry {
         this.handlers.put(EventId.GET_HOTEL_BOOKING, getHotelBookingEvent);
         this.handlers.put(EventId.CONFIRM_GET_HOTEL_BOOKING, confirmGetHotelBookingEvent);
         this.handlers.put(EventId.CANCEL_GET_HOTEL_BOOKING, cancelGetHotelBookingEvent);
-        this.handlers.put(EventId.BEGIN_DELETE_HOTEL_BOOKING, beginDeleteHotelBookingEvent);
+        
+        this.handlers.put(EventId.REMOVE_RESERVATION_TRAVEL, beginDeleteHotelBookingEvent);
         this.handlers.put(EventId.COMMIT_DELETE_HOTEL_BOOKING, commitDeleteHotelBookingEvent);
         this.handlers.put(EventId.ROLLBACK_DELETE_HOTEL_BOOKING, rollbackDeleteHotelBookingEvent);
         this.handlers.put(EventId.BEGIN_DELETE_HOTEL_BOOKINGLINE, beginDeleteHotelBookingLineEvent);
