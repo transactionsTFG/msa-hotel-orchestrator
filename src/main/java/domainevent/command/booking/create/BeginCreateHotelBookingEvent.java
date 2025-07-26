@@ -42,7 +42,7 @@ public class BeginCreateHotelBookingEvent extends BaseEventHandler {
 
     @Override
     public EventId sendEventId() {
-        return EventId.BEGIN_CREATE_HOTEL_BOOKING;
+        return EventId.CREATE_RESERVATION_TRAVEL;
     }
 
 }

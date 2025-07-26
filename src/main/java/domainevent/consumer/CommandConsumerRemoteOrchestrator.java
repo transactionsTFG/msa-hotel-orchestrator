@@ -17,7 +17,7 @@ import domainevent.registry.CommandRegistry;
 import msa.commons.consts.JMSQueueNames;
 import msa.commons.event.Event;
 
-@MessageDriven(mappedName = JMSQueueNames.REMOTE_ORCHESTRATOR_AIRLINE_QUEUE) //Se crea esta clase para enganchar con el orquestador Agencia, esto es simplemente cuando se consiga arreglar la conexion entre servidores JNDI
+@MessageDriven(mappedName = JMSQueueNames.REMOTE_ORCHESTRATOR_HOTEL_QUEUE) //Se crea esta clase para enganchar con el orquestador Agencia, esto es simplemente cuando se consiga arreglar la conexion entre servidores JNDI
 public class CommandConsumerRemoteOrchestrator implements MessageListener {
     private Gson gson;
     private CommandRegistry eventHandlerRegistry;
@@ -28,7 +28,7 @@ public class CommandConsumerRemoteOrchestrator implements MessageListener {
          try {
             if(msg instanceof TextMessage m) {
                 Event event = this.gson.fromJson(m.getText(), Event.class);
-                LOGGER.info("Recibido en Cola {}, Evento Id: {}, Mensaje: {}", JMSQueueNames.AIRLINE_ORCHESTATOR_QUEUE, event.getEventId(), event.getValue());
+                LOGGER.info("Recibido en Cola {}, Evento Id: {}, Mensaje: {}", JMSQueueNames.REMOTE_ORCHESTRATOR_HOTEL_QUEUE, event.getEventId(), event.getValue());
                 CommandHandler commandHandler = this.eventHandlerRegistry.getHandler(event.getEventId());
                 if(commandHandler != null)
                     commandHandler.handle(event.getValue());
