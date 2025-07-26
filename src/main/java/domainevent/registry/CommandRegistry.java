@@ -13,6 +13,7 @@ import com.oracle.state.ext.listener.StateCallback.Event;
 import business.qualifier.hotelbooking.BeginCreateHotelBookingEventQualifier;
 import business.qualifier.hotelbooking.BeginDeleteHotelBookingEventQualifier;
 import business.qualifier.hotelbooking.BeginDeleteHotelBookingLineEventQualifier;
+import business.qualifier.hotelbooking.BeginUpdateHotelBookingEventQualifier;
 import business.qualifier.hotelbooking.CancelGetHotelBookingEventQualifier;
 import business.qualifier.hotelbooking.CheckRoomsAvailabilityByCreateHotelBookingEventQualifier;
 import business.qualifier.hotelbooking.CheckRoomsAvailabilityByUpdateHotelBookingEventQualifier;
@@ -34,6 +35,7 @@ import business.qualifier.hotelcustomer.ValidateHotelCustomerByUpdateHotelBookin
 import business.qualifier.hotelroom.ValidateHotelRoomsByCreateHotelBookingQualifier;
 import business.qualifier.hotelroom.ValidateHotelRoomsByUpdateHotelBookingEventQualifier;
 import domainevent.command.handler.CommandHandler;
+import jnr.ffi.annotations.In;
 import msa.commons.event.EventId;
 
 @Singleton
@@ -63,6 +65,7 @@ public class CommandRegistry {
     private CommandHandler validateHotelRoomsByUpdateHotelBookingEvent;
     private CommandHandler checkRoomsAvailabilityByUpdateHotelBookingEvent;
     private CommandHandler beginCreateReservationHotel;
+    private CommandHandler beginUpdateReservationHotel;
 
     @PostConstruct
     public void init() {
@@ -99,6 +102,7 @@ public class CommandRegistry {
         this.handlers.put(EventId.COMMIT_UPDATE_HOTEL_BOOKING, commitUpdateHotelBookingEvent);
         this.handlers.put(EventId.ROLLBACK_UPDATE_HOTEL_BOOKING, rollbackUpdateHotelBookingEvent);
 
+        this.handlers.put(EventId.BEGIN_UPDATE_HOTEL_BOOKING, beginUpdateReservationHotel);
         this.handlers.put(EventId.VALIDATE_HOTEL_CUSTOMER_BY_UPDATE_HOTEL_BOOKING,
                 validateHotelCustomerByUpdateHotelBookingEvent);
         this.handlers.put(EventId.CONFIRM_VALIDATE_HOTEL_CUSTOMER_BY_UPDATE_HOTEL_BOOKING,
@@ -258,4 +262,8 @@ public class CommandRegistry {
         this.beginCreateReservationHotel = beginCreateReservationHotel;
     }
 
+    @Inject
+    public void setBeginUpdateReservationHotel(@BeginUpdateHotelBookingEventQualifier CommandHandler beginUpdateReservationHotel) {
+        this.beginUpdateReservationHotel = beginUpdateReservationHotel;
+    }
 }
