@@ -102,7 +102,7 @@ public class CommandRegistry {
         this.handlers.put(EventId.COMMIT_UPDATE_HOTEL_BOOKING, commitUpdateHotelBookingEvent);
         this.handlers.put(EventId.ROLLBACK_UPDATE_HOTEL_BOOKING, rollbackUpdateHotelBookingEvent);
 
-        this.handlers.put(EventId.BEGIN_UPDATE_HOTEL_BOOKING, beginUpdateReservationHotel);
+        this.handlers.put(EventId.UPDATE_RESERVATION_TRAVEL, beginUpdateReservationHotel);
         this.handlers.put(EventId.VALIDATE_HOTEL_CUSTOMER_BY_UPDATE_HOTEL_BOOKING,
                 validateHotelCustomerByUpdateHotelBookingEvent);
         this.handlers.put(EventId.CONFIRM_VALIDATE_HOTEL_CUSTOMER_BY_UPDATE_HOTEL_BOOKING,
